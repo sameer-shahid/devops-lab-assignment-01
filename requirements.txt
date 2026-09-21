@@ -1,0 +1,7 @@
+# Requirements for Cloud Web Application and Selenium Automation Framework
+Flask>=3.0.0
+selenium>=4.20.0
+webdriver-manager>=4.0.1
+pytest>=8.0.0
+pytest-html>=4.1.1
+pytest-metadata>=3.1.1

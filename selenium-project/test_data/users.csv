@@ -1,0 +1,8 @@
+test_case,fullName,studentEmail,rollNumber,age,password,department,expected_status,expected_message_contains
+valid_user_1,Bilal Tariq,bilal@cuilahore.edu.pk,SP23-BSE-128,21,SecurePass@123,Software Engineering,SUCCESS,successfully registered
+valid_user_2,Ayesha Khan,ayesha@cuilahore.edu.pk,FA23-BCS-088,20,StudentPass2026,Computer Science,SUCCESS,successfully registered
+empty_fields,,,,,,,ERROR,All fields are mandatory
+invalid_email,Zain Malik,not-an-email,SP23-BAI-012,22,Password123,Artificial Intelligence,ERROR,valid email address
+short_password,Hamza Raza,hamza@cuilahore.edu.pk,SP23-BCY-055,23,pass1,Cyber Security,ERROR,at least 8 characters
+invalid_age,Saad Ali,saad@cuilahore.edu.pk,SP23-BSE-077,99,SecurePass123,Software Engineering,ERROR,between 16 and 60
+default_department,Hina Sheikh,hina@cuilahore.edu.pk,SP23-BCS-033,21,SecurePass123,,ERROR,select a valid academic department

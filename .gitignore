@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Pytest & Testing
+.pytest_cache/
+selenium-project/.pytest_cache/
+selenium-project/logs/*.log
+selenium-project/reports/*.html
+selenium-project/screenshots/*.png
+!selenium-project/logs/.gitkeep
+!selenium-project/reports/.gitkeep
+!selenium-project/screenshots/.gitkeep
+
+# macOS metadata
+.DS_Store

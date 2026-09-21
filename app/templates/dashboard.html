@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DevOps Cloud Portal - Student Registration Dashboard for Lab Assignment 1">
+  <title>Dashboard - Student Management | CUI Lahore</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand-wrapper">
+      <div class="brand-badge">⚡</div>
+      <div class="brand-info">
+        <h1>CUI DevOps Cloud Portal</h1>
+        <span>Student Registration & Cloud Test Automation</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <span class="user-badge" id="currentUserBadge">
+        <span class="status-dot"></span> User: <strong id="loggedUsername">{{ user }}</strong>
+      </span>
+      <a href="/logout" id="btnLogout" class="btn btn-danger-outline">Sign Out</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Quick Statistics Banner -->
+    <section class="stats-banner">
+      <div class="stat-card">
+        <div class="stat-icon">🎓</div>
+        <div>
+          <div class="stat-value" id="totalStudentsCount">{{ students|length }}</div>
+          <div class="stat-label">Enrolled Students</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">☁️</div>
+        <div>
+          <div class="stat-value" id="statCloudHost">AWS EC2</div>
+          <div class="stat-label">Windows Server 2022</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🧪</div>
+        <div>
+          <div class="stat-value" id="statSeleniumStatus">Active</div>
+          <div class="stat-label">Selenium WebDriver POM</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Dashboard Grid -->
+    <div class="dashboard-grid">
+      <!-- Left Column: Student Registration Form -->
+      <section class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">📝 Student Registration</h2>
+            <p class="card-subtitle">DevOps Lab Assignment Functional Cloud Form</p>
+          </div>
+        </div>
+
+        <!-- Alert Banners for Feedback Messages -->
+        <div id="alertSuccess" class="alert alert-success hidden" role="alert"></div>
+        <div id="alertError" class="alert alert-error hidden" role="alert"></div>
+
+        <form id="registrationForm" novalidate>
+          <!-- Field 1: Full Name -->
+          <div class="form-group">
+            <label class="form-label" for="fullName">Full Name <span class="required-star">*</span></label>
+            <input type="text" id="fullName" name="fullName" class="form-control" placeholder="e.g. Sameer Ahmed" required>
+            <div class="field-hint">Enter student's official full name.</div>
+          </div>
+
+          <!-- Field 2: Student Email -->
+          <div class="form-group">
+            <label class="form-label" for="studentEmail">Student Email <span class="required-star">*</span></label>
+            <input type="email" id="studentEmail" name="studentEmail" class="form-control" placeholder="e.g. sp23-bse-128@cuilahore.edu.pk" required>
+            <div class="field-hint">Must be a valid email format.</div>
+          </div>
+
+          <!-- Field 3: Roll Number / Student ID -->
+          <div class="form-group">
+            <label class="form-label" for="rollNumber">Registration / Roll No <span class="required-star">*</span></label>
+            <input type="text" id="rollNumber" name="rollNumber" class="form-control" placeholder="e.g. SP23-BSE-128" required>
+            <div class="field-hint">COMSATS student registration ID.</div>
+          </div>
+
+          <!-- Field 4: Age / Semester Numeric Input -->
+          <div class="form-group">
+            <label class="form-label" for="age">Student Age (Years) <span class="required-star">*</span></label>
+            <input type="number" id="age" name="age" class="form-control" placeholder="e.g. 21" min="16" max="60" required>
+            <div class="field-hint">Must be an integer between 16 and 60.</div>
+          </div>
+
+          <!-- Field 5: Password -->
+          <div class="form-group">
+            <label class="form-label" for="password">Portal Password <span class="required-star">*</span></label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Minimum 8 characters" required>
+            <div class="field-hint">Length validation: Must be at least 8 characters.</div>
+          </div>
+
+          <!-- Dropdown List: Academic Department -->
+          <div class="form-group">
+            <label class="form-label" for="department">Degree Program / Department <span class="required-star">*</span></label>
+            <select id="department" name="department" class="form-control" required>
+              <option value="">-- Select Department --</option>
+              <option value="Software Engineering">Software Engineering</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Artificial Intelligence">Artificial Intelligence</option>
+              <option value="Cyber Security">Cyber Security</option>
+            </select>
+            <div class="field-hint">Select the student's admitted program.</div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="btn-group">
+            <button type="submit" id="btnSubmit" class="btn btn-primary">
+              <span>Register Student</span>
+            </button>
+            <button type="button" id="btnClear" class="btn btn-secondary">
+              <span>Clear Form</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Column: Student Records Table -->
+      <section class="glass-card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">👥 Registered Students</h2>
+            <p class="card-subtitle">Real-time Cloud Database View</p>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="studentsTable">
+            <thead>
+              <tr>
+                <th>Student Name</th>
+                <th>Roll No</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Age</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTableBody">
+              {% for student in students %}
+              <tr>
+                <td><strong>{{ student.fullName }}</strong></td>
+                <td>{{ student.rollNumber }}</td>
+                <td>{{ student.studentEmail }}</td>
+                <td><span class="badge-dept">{{ student.department }}</span></td>
+                <td>{{ student.age }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>COMSATS University Islamabad, Lahore Campus • CSC418 DevOps Lab Assignment 1</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

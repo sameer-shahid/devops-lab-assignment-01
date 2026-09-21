@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DevOps Cloud Portal - Authentication Page for Lab Assignment 1">
+  <title>Login - DevOps Cloud Portal | CUI Lahore</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand-wrapper">
+      <div class="brand-badge">☁</div>
+      <div class="brand-info">
+        <h1>CUI DevOps Cloud Portal</h1>
+        <span>COMSATS University Islamabad, Lahore Campus</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <span class="user-badge"><span class="status-dot"></span> AWS EC2 Cloud Ready</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="auth-wrapper">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to access the Cloud Student Portal</p>
+        </div>
+
+        {% if error %}
+        <div id="loginError" class="alert alert-error" role="alert">
+          <span>⚠️</span> <span>{{ error }}</span>
+        </div>
+        {% else %}
+        <div id="loginError" class="alert alert-error hidden" role="alert"></div>
+        {% endif %}
+
+        <form id="loginForm" method="POST" action="/login">
+          <div class="form-group">
+            <label class="form-label" for="username">Username <span class="required-star">*</span></label>
+            <div class="input-container">
+              <input type="text" id="username" name="username" class="form-control" placeholder="Enter username (e.g. admin)" autocomplete="username" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password <span class="required-star">*</span></label>
+            <div class="input-container">
+              <input type="password" id="password" name="password" class="form-control" placeholder="Enter password (e.g. Admin@123)" autocomplete="current-password" required>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" id="btnLogin" class="btn btn-primary" style="width: 100%;">
+              <span>Sign In to Dashboard →</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="demo-credentials">
+          <strong>Demo Credentials for Evaluation / Viva:</strong><br>
+          Username: <code>admin</code> | Password: <code>Admin@123</code><br>
+          Alternative: <code>student</code> | Password: <code>Student@123</code>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>CSC418: DevOps for Cloud Computing • Lab Assignment 1 • Developed for AWS Windows EC2 Automation</p>
+  </footer>
+</body>
+</html>
