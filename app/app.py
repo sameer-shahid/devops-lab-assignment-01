@@ -27,7 +27,9 @@ STUDENTS_DB = [
 VALID_USERS = {
     "admin": "Admin@123",
     "student": "Student@123",
-    "devops": "DevOps@2026"
+    "devops": "DevOps@2026",
+    "sp23-bse-128@cuilahore.edu.pk": "Fdsa@1209",
+    "sp23-bse-128": "Fdsa@1209"
 }
 
 EMAIL_REGEX = r"^[\w\.-]+@[\w\.-]+\.[a-zA-Z]{2,}$"

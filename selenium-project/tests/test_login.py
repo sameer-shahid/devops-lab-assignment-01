@@ -27,15 +27,26 @@ class TestLogin:
         login_page.take_screenshot("TC_LOG_01_ValidLogin_Success")
 
     def test_valid_student_login(self, driver, base_url):
-        """TC-LOG-02: Verify successful login with secondary valid student credentials."""
+        """TC-LOG-02: Verify successful login with student credentials and hold 15 seconds on login page."""
+        import time
         login_page = LoginPage(driver)
         registration_page = RegistrationPage(driver)
 
         login_page.open(base_url)
-        login_page.login("student", "Student@123")
+        login_page.enter_username("sp23-bse-128@cuilahore.edu.pk")
+        login_page.enter_password("Fdsa@1209")
+
+        # Hold 15 seconds on the login page with credentials filled
+        time.sleep(15)
+
+        login_page.click_login()
 
         assert registration_page.is_at_dashboard(), "Student user was not redirected to /dashboard!"
-        assert "student" in registration_page.get_logged_username().lower()
+        assert "sp23-bse-128" in registration_page.get_logged_username().lower()
+
+        # Hold 3 seconds on dashboard to view success
+        time.sleep(3)
+        login_page.take_screenshot("TC_LOG_02_Student_Login_Success")
 
     def test_invalid_password(self, driver, base_url):
         """TC-LOG-03: Verify error message when logging in with incorrect password."""
